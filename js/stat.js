@@ -20,7 +20,6 @@ var getMax = function (arr) {
     }
   }
   return max;
-
 };
 
 
