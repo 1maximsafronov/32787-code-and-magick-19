@@ -17,28 +17,17 @@ var getRandom = function (arr) {
   return random;
 };
 
-var wizards = [
-  {
+var wizards = [];
+for (var i = 0; i < 4; i++) {
+  var obj = {
     name: getRandom(WIZARD_NAMES) + ' ' + getRandom(WIZARD_SURNAMES),
     eyesColor: getRandom(EYES_COLORS),
     coatColor: getRandom(COAT_COLORS)
-  },
-  {
-    name: getRandom(WIZARD_NAMES) + ' ' + getRandom(WIZARD_SURNAMES),
-    eyesColor: getRandom(EYES_COLORS),
-    coatColor: getRandom(COAT_COLORS)
-  },
-  {
-    name: getRandom(WIZARD_NAMES) + ' ' + getRandom(WIZARD_SURNAMES),
-    eyesColor: getRandom(EYES_COLORS),
-    coatColor: getRandom(COAT_COLORS)
-  },
-  {
-    name: getRandom(WIZARD_NAMES) + ' ' + getRandom(WIZARD_SURNAMES),
-    eyesColor: getRandom(EYES_COLORS),
-    coatColor: getRandom(COAT_COLORS)
-  }
-];
+  };
+
+  wizards[i] = obj;
+  obj = null;
+}
 
 
 var renderWizard = function (wizard) {
@@ -51,8 +40,8 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-for (var i = 0; i < wizards.length; i++) {
-  fragment.appendChild(renderWizard(wizards[i]));
+for (var j = 0; j < wizards.length; j++) {
+  fragment.appendChild(renderWizard(wizards[j]));
 }
 
 similarListElemet.appendChild(fragment);
