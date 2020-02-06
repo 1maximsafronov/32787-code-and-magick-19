@@ -52,7 +52,6 @@ var createSimilarWizards = function (quantity) {
     };
 
     wizardsArr[i] = wizard;
-    wizard = null;
   }
   return wizardsArr;
 };
@@ -130,15 +129,15 @@ setupClose.addEventListener('keydown', function (evt) {
 
 // Валидация поля имени
 userNameInput.addEventListener('invalid', function () {
+  var errorMessage = '';
   if (userNameInput.validity.tooShort) {
-    userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+    errorMessage = 'Имя должно состоять минимум из 2-х символов';
   } else if (userNameInput.validity.tooLong) {
-    userNameInput.setCustomValidity('Имя не должно привышать 25-ти символов');
+    errorMessage = 'Имя не должно привышать 25-ти символов';
   } else if (userNameInput.validity.valueMissing) {
-    userNameInput.setCustomValidity('Обязательное поле');
-  } else {
-    userNameInput.setCustomValidity('');
+    errorMessage = 'Обязательное поле';
   }
+  userNameInput.setCustomValidity(errorMessage);
 });
 
 userNameInput.addEventListener('input', function (evt) {
