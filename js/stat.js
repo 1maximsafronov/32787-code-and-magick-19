@@ -37,12 +37,15 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Список результатов:', 120, 50);
 
   var maxTime = getMax(times);
-
+  var barX;
+  var barY;
+  var barColor;
+  var randomNumber;
   for (var i = 0; i < times.length; i++) {
-    var barX = 150 + (BAR__WIDTH + 50) * i;
-    var barY = 100 + BAR__HEIGHT - BAR__HEIGHT * (times[i] / maxTime);
-    var random = Math.floor(Math.random() * 100);
-    var barColor = 'hsl(240, ' + random.toString() + '%, 50%)';
+    barX = 150 + (BAR__WIDTH + 50) * i;
+    barY = 100 + BAR__HEIGHT - BAR__HEIGHT * (times[i] / maxTime);
+    randomNumber = Math.floor(Math.random() * 100);
+    barColor = 'hsl(240, ' + randomNumber.toString() + '%, 50%)';
 
     if (names[i] === 'Вы') {
       barColor = 'rgba(255, 0, 0, 1)';
