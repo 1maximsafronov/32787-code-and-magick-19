@@ -14,8 +14,6 @@
     window.util.isEscEvent(evt, closePopup);
   };
 
-  // console.log(setup.offsetLeft);
-  // console.log(setup.offsetTop);
   var opsenPopup = function () {
     setup.classList.remove('hidden');
 

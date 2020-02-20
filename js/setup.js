@@ -20,7 +20,7 @@
 
   var userNameInput = setup.querySelector('.setup-user-name');
 
-  var setupWizard = document.querySelector('.setup-wizard');
+  var setupWizard = setup.querySelector('.setup-wizard');
   var wizardCoat = setupWizard.querySelector('.wizard-coat');
   var wizardEyes = setupWizard.querySelector('.wizard-eyes');
   var setupFireballWrap = setup.querySelector('.setup-fireball-wrap');
@@ -29,7 +29,7 @@
   var inputFireballColor = setupFireballWrap.querySelector('input[name="fireball-color"]');
 
   var similarWizards;
-  var similarListElemet = document.querySelector('.setup-similar-list');
+  var similarListElemet = setup.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
   // Функция получения случайного элемента из массива
@@ -78,7 +78,7 @@
   // Отрисовка похожих персонажей
   similarListElemet.appendChild(getWizardElements(similarWizards));
 
-  document.querySelector('.setup-similar').classList.remove('hidden');
+  setup.querySelector('.setup-similar').classList.remove('hidden');
 
   // Валидация поля имени
   userNameInput.addEventListener('invalid', function () {
