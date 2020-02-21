@@ -63,22 +63,23 @@
     return wizardElement;
   };
 
+
   // Функция отрисовки всех похожих магов
-  var getWizardElements = function (wizardsObjcts) {
+  var drawWizards = function (wizardsObjcts) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < wizardsObjcts.length; i++) {
       fragment.appendChild(renderSimilarWizard(wizardsObjcts[i]));
     }
-    return fragment;
+    // Отрисовка похожих персонажей
+    similarListElemet.appendChild(fragment);
+    setup.querySelector('.setup-similar').classList.remove('hidden');
   };
 
   // Получаем 4 похожих персонажа
   similarWizards = createSimilarWizards(4);
 
-  // Отрисовка похожих персонажей
-  similarListElemet.appendChild(getWizardElements(similarWizards));
-
-  setup.querySelector('.setup-similar').classList.remove('hidden');
+  // Вызыв функции отрисовки
+  drawWizards(similarWizards);
 
   // Валидация поля имени
   userNameInput.addEventListener('invalid', function () {
