@@ -107,4 +107,12 @@
   window.colorize(wizardEyes, EYES_COLORS, inputEyesColor);
   window.colorize(setupFireballWrap, FIREBALL_COLORS, inputFireballColor);
 
+  // var form = setup.querySelector('.setup-wizard-form');
+  // form.addEventListener('submit', function (evt) {
+  //   window.upload(new FormData(form), function (response) {
+  //     setup.classList.add('hidden');
+  //   });
+  //   evt.preventDefault();
+  // });
+
 })();
