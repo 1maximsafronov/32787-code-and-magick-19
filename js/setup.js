@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
   var COAT_COLORS = [
     'rgb(101, 137, 164)',
     'rgb(241, 43, 107)',
@@ -17,69 +15,67 @@
   var MIN_NAME_LENGTH = 2;
 
   var setup = document.querySelector('.setup');
-
+  var form = setup.querySelector('.setup-wizard-form');
   var userNameInput = setup.querySelector('.setup-user-name');
 
   var setupWizard = setup.querySelector('.setup-wizard');
   var wizardCoat = setupWizard.querySelector('.wizard-coat');
   var wizardEyes = setupWizard.querySelector('.wizard-eyes');
   var setupFireballWrap = setup.querySelector('.setup-fireball-wrap');
-  var inputCoatColor = setup.querySelector('input[name="coat-color"]');
-  var inputEyesColor = setup.querySelector('input[name="eyes-color"]');
+  var inputcolorCoat = setup.querySelector('input[name="coat-color"]');
+  var inputcolorEyes = setup.querySelector('input[name="eyes-color"]');
   var inputFireballColor = setupFireballWrap.querySelector('input[name="fireball-color"]');
 
-  var similarWizards;
+
   var similarListElemet = setup.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-  // Функция получения случайного элемента из массива
-  var getRandom = function (arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
-  };
-
-  // Функция описания свойств нескольких магов
-  var createSimilarWizards = function (quantity) {
-    var wizardsArr = [];
-    for (var i = 0; i < quantity; i++) {
-      var wizard = {
-        name: getRandom(WIZARD_NAMES) + ' ' + getRandom(WIZARD_SURNAMES),
-        eyesColor: getRandom(EYES_COLORS),
-        coatColor: getRandom(COAT_COLORS)
-      };
-
-      wizardsArr[i] = wizard;
-    }
-    return wizardsArr;
-  };
-
   // Функция рендера одного мага
-  var renderSimilarWizard = function (wizard) {
+  var renderWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
 
     return wizardElement;
   };
 
-
   // Функция отрисовки всех похожих магов
-  var drawWizards = function (wizardsObjcts) {
+  var renderSimilarWizards = function (wizardsObjcts) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < wizardsObjcts.length; i++) {
-      fragment.appendChild(renderSimilarWizard(wizardsObjcts[i]));
+    for (var i = 0; i < 4; i++) {
+      fragment.appendChild(renderWizard(wizardsObjcts[i]));
     }
     // Отрисовка похожих персонажей
     similarListElemet.appendChild(fragment);
     setup.querySelector('.setup-similar').classList.remove('hidden');
   };
 
-  // Получаем 4 похожих персонажа
-  similarWizards = createSimilarWizards(4);
+  // // Получаем 4 случайных волшебников и выводим
+  // var similarWizards = window.randomwizards.get(4, EYES_COLORS, COAT_COLORS);
+  // renderSimilarWizards(similarWizards);
 
-  // Вызыв функции отрисовки
-  drawWizards(similarWizards);
+
+  var onLoad = function (wizards) {
+    renderSimilarWizards(wizards);
+  };
+
+  var onError = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  //
+  // Функция отрисовки магов полученных с сервера
+  window.backend.load(onLoad, onError);
 
   // Валидация поля имени
   userNameInput.addEventListener('invalid', function () {
@@ -103,8 +99,16 @@
     }
   });
 
-  window.colorize(wizardCoat, COAT_COLORS, inputCoatColor);
-  window.colorize(wizardEyes, EYES_COLORS, inputEyesColor);
+  window.colorize(wizardCoat, COAT_COLORS, inputcolorCoat);
+  window.colorize(wizardEyes, EYES_COLORS, inputcolorEyes);
   window.colorize(setupFireballWrap, FIREBALL_COLORS, inputFireballColor);
+
+  var onFormSubmit = function () {
+    setup.classList.add('hidden');
+  };
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), onFormSubmit, onError);
+    evt.preventDefault();
+  });
 
 })();
