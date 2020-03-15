@@ -24,6 +24,12 @@ var getMax = function (arr) {
 
 
 window.renderStatistics = function (ctx, names, times) {
+  var maxTime = getMax(times);
+  var barX;
+  var barY;
+  var barColor;
+  var randomNumber;
+
   renderCloud(ctx, CLOUD_X + 10, CLOUD_Y + 10, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#ffffff');
 
@@ -36,11 +42,6 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Ура вы победили!', 120, 30);
   ctx.fillText('Список результатов:', 120, 50);
 
-  var maxTime = getMax(times);
-  var barX;
-  var barY;
-  var barColor;
-  var randomNumber;
   for (var i = 0; i < times.length; i++) {
     barX = 150 + (BAR__WIDTH + 50) * i;
     barY = 100 + BAR__HEIGHT - BAR__HEIGHT * (times[i] / maxTime);
